@@ -25,6 +25,8 @@ const parameters = {
 }
 
 let geometry, material, points
+let spherePositions, sphereColors
+let currentIndex = 0
 
 const generateSpiral = () => {
     console.time('generate spiral')
@@ -34,6 +36,7 @@ const generateSpiral = () => {
      */
     geometry = new THREE.BufferGeometry()
 
+    const index = new Float32Array(parameters.count)
     const positions = new Float32Array(parameters.count * 3)
     const colors = new Float32Array(parameters.count * 3)
 
@@ -45,10 +48,13 @@ const generateSpiral = () => {
     for (let i = 0; i < parameters.count; i++) {
         const i3 = i * 3
 
+        // Index
+        index[i] = i  
+
         // Position
         positions[i3] = parameters.radius * Math.cos(alpha * i) * Math.cos((-Math.PI/2) + ((alpha * i)/parameters.alphaMax) * Math.PI)
         positions[i3 + 1] = parameters.radius * Math.sin(alpha * i) * Math.cos((-Math.PI/2) + ((alpha * i)/parameters.alphaMax) * Math.PI)
-        positions[i3 + 2] = parameters.radius * Math.sin((-Math.PI/2) + ((alpha * i)/parameters.alphaMax) * Math.PI)
+        positions[i3 + 2] = - parameters.radius * Math.sin((-Math.PI/2) + ((alpha * i)/parameters.alphaMax) * Math.PI)
 
         // Color
         const mixedColor = insideColor.clone()
@@ -59,8 +65,12 @@ const generateSpiral = () => {
 
     }
 
+    geometry.setAttribute('index', new THREE.BufferAttribute(index, 1))
     geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3))
     geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3))
+
+    spherePositions = positions
+    sphereColors = colors
 
     /**
      * Material
@@ -81,10 +91,79 @@ const generateSpiral = () => {
     console.timeEnd('generate spiral')
 }
 
+function shuffleSpiral() {
+    console.time('Shuffle spiral')
+
+    const positions = points.geometry.attributes.position.array
+    const colors = points.geometry.attributes.color.array
+
+    // shuffle points positions
+    for (let i = 0; i < positions.length; i += 3) {
+        const i3 = i * 3
+
+        // index
+        const index = Math.floor(Math.random() * positions.length / 3) * 3
+
+        // Position
+        positions[i3] = spherePositions[i3] + (Math.random() - 0.5) * parameters.radius
+        positions[i3 + 1] = spherePositions[i3 + 1] + (Math.random() - 0.5) * parameters.radius
+        positions[i3 + 2] = spherePositions[i3 + 2] + (Math.random() - 0.5) * parameters.radius
+
+        // Color
+        colors[i3] = sphereColors[i3]
+        colors[i3 + 1] = sphereColors[i3 + 1]
+        colors[i3 + 2] = sphereColors[i3 + 2]
+    }
+
+    geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3))
+    geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3))
+    points.geometry.attributes.position.needsUpdate = true
+    points.geometry.attributes.color.needsUpdate = true
+
+    console.timeEnd('Shuffle spiral')
+}
+
+function sortSpiral() {
+    console.time('Sort spiral')
+
+    const positions = points.geometry.attributes.position.array
+    const colors = points.geometry.attributes.color.array
+
+    // sort points positions depending on the index
+    for (let i = 0; i < positions.length; i += 3) {
+        const i3 = i * 3
+
+        // index
+        const index = i
+
+        // Position
+        positions[i3] = spherePositions[i3]
+        positions[i3 + 1] = spherePositions[i3 + 1]
+        positions[i3 + 2] = spherePositions[i3 + 2]
+
+        // Color
+        colors[i3] = sphereColors[i3]
+        colors[i3 + 1] = sphereColors[i3 + 1]
+        colors[i3 + 2] = sphereColors[i3 + 2]
+
+    }
+    geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3))
+    geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3))
+    points.geometry.attributes.position.needsUpdate = true
+    points.geometry.attributes.color.needsUpdate = true
+
+    console.timeEnd('Sort spiral')
+}
+
+
 // listen to shuffleButton3dSort and shuffle the buffer geometry of the points objects
 const shuffleButton3dSort = document.getElementById('shuffleButton3dSort')
 shuffleButton3dSort.addEventListener('click', () => {
-    console.log('shuffle')
+    console.log('Shuffle done')
+
+    console.log('Randomized position', points.geometry.attributes.position.array)
+    console.log('Randomized ', points.geometry.attributes.color.array)
+
     shuffleButton3dSort.style.display = 'none'
     sortButton3dSort.style.display = 'block'
 })
@@ -92,7 +171,11 @@ shuffleButton3dSort.addEventListener('click', () => {
 // listen to sortButton3dSort and sort the buffer geometry of the points objects
 const sortButton3dSort = document.getElementById('sortButton3dSort')
 sortButton3dSort.addEventListener('click', () => {
-    console.log('sort')
+    console.log('Sort done')
+
+    console.log(points.geometry.attributes.position.array)
+    console.log(points.geometry.attributes.color.array)
+
     sortButton3dSort.style.display = 'none'
     shuffleButton3dSort.style.display = 'block'
 })
