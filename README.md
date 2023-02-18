@@ -17,7 +17,6 @@ On utilise un CDN bootstrap pour le style responsive et on utilise Three.js pour
 On retrouve index.html qui est la page principale, ainsi qu'un fichier main.js qui contient le code javascript pour les exercices 1 à 4. L'exercice 5 se compose de trois partie: 
   - Une visualisation 2d du tris quick sort
   - Une visualisation 2d du tris merge sort
-  - Une visualisation 3d du tris quick sort
 Chaque partie de l'exercice 5 est codé dans un fichier JavaScript séparé.
 
 ## Technologies
@@ -28,7 +27,6 @@ Ce projet est réalisé avec:
 - CSS3
 - Bootstrap 5
 - JavaScript
-- Three.js
 
 ## Installation
 

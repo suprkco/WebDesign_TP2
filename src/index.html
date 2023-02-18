@@ -12,6 +12,9 @@
   </head>
 
   <body onload="afficherImg()">
+    <!-- 3d display in background -->
+    <!-- <canvas class="webgl"></canvas> -->
+
     <div class="container-fluid flex-wrap justify-content-center">
       <!-- Header -->
       <header class="d-flex justify-content-between flex-wrap justify-content-center d-flex align-items-center py-3 mb-4 border-bottom navbar-dark">
@@ -324,30 +327,6 @@
           </div>
         </div>
 
-        <div class="w-100 p-2"></div> <!-- Pour sauter une ligne -->
-
-        <!-- Card - Exercice 5 ter: Visualisation 3D du tris -->
-        <div class="col col-md-8 p-2">
-          <div class="card">
-            <h5 class="card-header">Exercice 5 ter: Visualisation 3D du tris</h5>
-            <div class="card-body">
-              <div class="row">
-                <div class="w-100 col" id="3dSort">
-                </div>
-                <div class="w-100 p-2"></div> <!-- Pour sauter une ligne -->
-                <div class="col">
-                  <button id="shuffleButton3dSort" class="w-100 btn btn-secondary btn-sm" type="button" style="display: block;">
-                    Créer et mélanger la liste
-                  </button>
-                  <button id="sortButton3dSort" class="w-100 btn btn-secondary btn-sm" type="button" style="display: none;">
-                    Trier la liste
-                  </button>
-                </div>                
-              </div>
-            </div>
-          </div>
-        </div>
-      
       </div>
 
       <!-- footer -->
@@ -388,7 +367,7 @@
       }
     </script>
     <!-- 3dSort js link -->
-    <script type="module" src="3dSort.js"></script>
+    <script type="module" src="3d.js"></script>
     
   </body>
 </html>
