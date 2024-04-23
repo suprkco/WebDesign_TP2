@@ -1,6 +1,6 @@
 # TP2 - Web Design
 
-> Projet Web Design - EPF - 2023 - CODACCIONI Kilian
+> Projet Web Design - EPF - 2023
 
 ## Table des matières
 
