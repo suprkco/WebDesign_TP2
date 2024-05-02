@@ -2,14 +2,6 @@
 
 > Projet Web Design - EPF - 2023
 
-## Table des matières
-
-- [TP2 Web Design](#tp-web-design)
-  - [Table des matières](#table-des-matières)
-  - [Présentation](#présentation)
-  - [Technologies](#technologies)
-  - [Installation](#installation)
-
 ## Présentation
 
 Ceci est le dépôt du deuxieme TP effectué dans le cadre du cours de de web design.
@@ -28,9 +20,3 @@ Ce projet est réalisé avec:
 - CSS3
 - Bootstrap 5
 - JavaScript
-
-## Installation
-
-Pour installer ce projet, il suffit de le cloner avec la commande suivante:
-
-    git clone https://github.com/suprkco/WebDesign_TP2_CODACCIONI.git
